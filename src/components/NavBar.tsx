@@ -2,13 +2,30 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Brain, BookOpen, Calendar, Activity, User } from 'lucide-react';
+import { Brain, BookOpen, Calendar, Activity, User, LogIn } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
 const NavBar = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const location = useLocation();
   const isHomePage = location.pathname === '/';
+  const isAuthPage = location.pathname === '/sign-in' || location.pathname === '/sign-up';
+  
+  // This would be replaced with actual auth state management
+  useEffect(() => {
+    // Demo auth check
+    const checkAuth = () => {
+      const isAuth = 
+        location.pathname === '/dashboard' || 
+        location.pathname === '/microlearning' || 
+        location.pathname === '/digital-wellness' || 
+        location.pathname === '/profile';
+      setIsAuthenticated(isAuth);
+    };
+    
+    checkAuth();
+  }, [location.pathname]);
   
   useEffect(() => {
     const handleScroll = () => {
@@ -23,6 +40,9 @@ const NavBar = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [scrolled]);
+
+  // Don't show NavBar on auth pages
+  if (isAuthPage) return null;
 
   const navLinks = [
     { name: 'Dashboard', path: '/dashboard', icon: Brain },
@@ -50,7 +70,7 @@ const NavBar = () => {
             </Link>
           </div>
           <nav className="hidden md:flex space-x-8">
-            {navLinks.map((link) => (
+            {isAuthenticated && navLinks.map((link) => (
               <Link
                 key={link.name}
                 to={link.path}
@@ -73,10 +93,17 @@ const NavBar = () => {
             ))}
           </nav>
           <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0 space-x-4">
-            {isHomePage && (
+            {!isAuthenticated && (
               <>
-                <Button variant="outline">Log in</Button>
-                <Button>Get Started</Button>
+                <Button variant="outline" asChild>
+                  <Link to="/sign-in">
+                    <LogIn className="mr-2 h-4 w-4" />
+                    Log in
+                  </Link>
+                </Button>
+                <Button asChild>
+                  <Link to="/sign-up">Get Started</Link>
+                </Button>
               </>
             )}
           </div>

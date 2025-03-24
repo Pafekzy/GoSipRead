@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Hero from '@/components/Hero';
 import NavBar from '@/components/NavBar';
 import { motion } from 'framer-motion';
@@ -121,9 +122,11 @@ const Index = () => {
                     </motion.li>
                   ))}
                 </ul>
-                <Button className="mt-2">
-                  Discover Digital Wellness
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                <Button asChild className="mt-2">
+                  <Link to="/digital-wellness">
+                    Discover Digital Wellness
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
                 </Button>
               </motion.div>
               
@@ -162,12 +165,16 @@ const Index = () => {
                 Join thousands of users who are maximizing their potential through AI-guided microlearning.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" className="group">
-                  Get Started for Free
-                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                <Button size="lg" className="group" asChild>
+                  <Link to="/sign-up">
+                    Get Started for Free
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Link>
                 </Button>
-                <Button size="lg" variant="outline">
-                  See How It Works
+                <Button size="lg" variant="outline" asChild>
+                  <Link to="/sign-in">
+                    Sign In
+                  </Link>
                 </Button>
               </div>
             </motion.div>

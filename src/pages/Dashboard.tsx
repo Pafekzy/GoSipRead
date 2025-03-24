@@ -1,309 +1,319 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import NavBar from '@/components/NavBar';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Brain, BookOpen, Rocket, Activity, TrendingUp, Calendar, Star, Clock, BookOpen as BookOpenIcon } from 'lucide-react';
+import { Progress } from "@/components/ui/progress";
+import { BarChart } from "@/components/ui/bar-chart";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Brain, BookOpen, Star, Clock, ArrowRight, Activity, UserPlus, CalendarDays, Sparkles } from 'lucide-react';
 
 const Dashboard = () => {
   const fadeInUp = {
     initial: { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+    animate: { opacity: 1, y: 0, transition: { duration: 0.5 } }
   };
-  
+
   const staggerContainer = {
     animate: { transition: { staggerChildren: 0.1 } }
   };
 
-  const fadeSideways = {
-    initial: { opacity: 0, x: -20 },
-    animate: { opacity: 1, x: 0, transition: { duration: 0.5 } }
-  };
+  // Sample data for learning chart
+  const learningData = [
+    { day: 'Mon', Minutes: 15 },
+    { day: 'Tue', Minutes: 25 },
+    { day: 'Wed', Minutes: 20 },
+    { day: 'Thu', Minutes: 30 },
+    { day: 'Fri', Minutes: 15 },
+    { day: 'Sat', Minutes: 25 },
+    { day: 'Sun', Minutes: 35 },
+  ];
+
+  // Sample data for digital wellness
+  const wellnessData = [
+    { day: 'Mon', 'Mindful Use': 45, 'Distracted Use': 120 },
+    { day: 'Tue', 'Mindful Use': 60, 'Distracted Use': 90 },
+    { day: 'Wed', 'Mindful Use': 75, 'Distracted Use': 60 },
+    { day: 'Thu', 'Mindful Use': 50, 'Distracted Use': 100 },
+    { day: 'Fri', 'Mindful Use': 65, 'Distracted Use': 80 },
+    { day: 'Sat', 'Mindful Use': 90, 'Distracted Use': 60 },
+    { day: 'Sun', 'Mindful Use': 80, 'Distracted Use': 40 },
+  ];
+
+  const todaysLessons = [
+    {
+      id: 1,
+      title: "Critical Thinking Challenge",
+      description: "Identify logical fallacies in real-world arguments",
+      duration: "10 min",
+      category: "Critical Thinking"
+    },
+    {
+      id: 2,
+      title: "5-Minute Communication Drill",
+      description: "Practice concise explanations of complex topics",
+      duration: "5 min",
+      category: "Communication"
+    },
+    {
+      id: 3,
+      title: "Digital Detox Meditation",
+      description: "Guided exercise for mental clarity",
+      duration: "8 min",
+      category: "Digital Wellness"
+    }
+  ];
+
+  const insightItems = [
+    {
+      title: "Learning Peak Hours",
+      description: "Your focus is highest between 8-10am. Schedule critical learning during this time.",
+      icon: Sparkles,
+      color: "text-amber-500"
+    },
+    {
+      title: "Digital Habit Improvement",
+      description: "You've reduced social media usage by 22% this week. Keep it up!",
+      icon: Activity,
+      color: "text-green-500"
+    },
+    {
+      title: "Consistency Streak",
+      description: "You're on day 7 of your learning streak. Just 3 more days to reach your goal!",
+      icon: Star,
+      color: "text-primary"
+    }
+  ];
 
   return (
     <div className="min-h-screen bg-background page-transition">
       <NavBar />
       
       <main className="container px-4 md:px-6 pt-24 pb-16">
-        <motion.div 
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+          <motion.div 
+            variants={fadeInUp}
+            initial="initial"
+            animate="animate"
+          >
+            <h1 className="text-3xl font-bold tracking-tight">Welcome Back</h1>
+            <p className="text-muted-foreground">
+              Your personal growth journey continues today
+            </p>
+          </motion.div>
+          
+          <motion.div
+            variants={fadeInUp}
+            initial="initial"
+            animate="animate"
+            className="mt-4 md:mt-0"
+          >
+            <div className="flex items-center gap-3">
+              <div className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium">
+                <div className="flex items-center">
+                  <Star className="h-4 w-4 mr-1" />
+                  <span>Streak: 7 days</span>
+                </div>
+              </div>
+              <div className="bg-accent/10 text-accent px-3 py-1 rounded-full text-sm font-medium">
+                <div className="flex items-center">
+                  <Brain className="h-4 w-4 mr-1" />
+                  <span>1,245 points</span>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+        
+        {/* Today's Plan Section */}
+        <motion.div
           variants={fadeInUp}
           initial="initial"
           animate="animate"
-          className="flex justify-between items-center mb-8"
+          className="mb-8"
         >
-          <div>
-            <h1 className="text-3xl font-bold tracking-tight">Your Dashboard</h1>
-            <p className="text-muted-foreground">Track your progress and continue your learning journey</p>
-          </div>
-          <Button>
-            Daily Challenge
-            <Star className="ml-2 h-4 w-4" />
-          </Button>
+          <Card className="bg-gradient-to-br from-primary/5 to-accent/5 border">
+            <CardHeader className="pb-2">
+              <div className="flex justify-between items-start">
+                <div>
+                  <div className="text-sm font-medium text-primary mb-1">
+                    Today's Growth Plan
+                  </div>
+                  <CardTitle>Your Personalized Learning Path</CardTitle>
+                  <CardDescription>
+                    Completing these activities will keep you on track with your goals
+                  </CardDescription>
+                </div>
+                <div className="bg-background rounded-full h-12 w-12 flex items-center justify-center">
+                  <CalendarDays className="h-6 w-6 text-primary" />
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {todaysLessons.map((lesson) => (
+                  <div key={lesson.id} className="bg-background/60 rounded-lg p-4 hover-scale">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                      <div>
+                        <div className="text-sm font-medium text-accent mb-1">
+                          {lesson.category}
+                        </div>
+                        <h3 className="font-medium">{lesson.title}</h3>
+                        <p className="text-sm text-muted-foreground">{lesson.description}</p>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                          <Clock className="h-4 w-4" />
+                          <span>{lesson.duration}</span>
+                        </div>
+                        <Button size="sm">Start</Button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+            <CardFooter>
+              <div className="w-full">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-sm text-muted-foreground">Daily progress</span>
+                  <span className="text-sm font-medium">33%</span>
+                </div>
+                <Progress value={33} className="h-2" />
+              </div>
+            </CardFooter>
+          </Card>
         </motion.div>
-
-        {/* Progress Overview */}
+        
+        {/* Stats and Charts Section */}
         <motion.div 
           variants={staggerContainer}
           initial="initial"
           animate="animate"
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8"
+          className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8"
         >
-          {[
-            { 
-              title: "Learning Progress", 
-              description: "72% complete in current path", 
-              value: 72, 
-              icon: BookOpenIcon,
-              color: "text-primary"
-            },
-            { 
-              title: "Streak", 
-              description: "8 days in a row", 
-              value: 80, 
-              icon: Activity,
-              color: "text-green-500"
-            },
-            { 
-              title: "Digital Wellness", 
-              description: "Reduced screen time by 35%", 
-              value: 65, 
-              icon: TrendingUp,
-              color: "text-accent"
-            }
-          ].map((item, index) => (
-            <motion.div key={index} variants={fadeInUp}>
-              <Card className="hover-scale">
-                <CardHeader className="pb-2">
-                  <div className="flex justify-between items-start">
-                    <CardTitle className="text-lg font-medium">{item.title}</CardTitle>
-                    <div className={`h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center ${item.color}`}>
-                      <item.icon size={18} />
-                    </div>
-                  </div>
-                  <CardDescription>{item.description}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-2">
-                    <Progress value={item.value} className="h-2" />
-                    <div className="flex justify-between text-sm text-muted-foreground">
-                      <span>Progress</span>
-                      <span>{item.value}%</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </motion.div>
-        
-        {/* Main content grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Learning Path */}
-          <motion.div 
-            variants={fadeSideways}
-            initial="initial"
-            animate="animate" 
-            className="lg:col-span-2"
+          {/* Learning Activity Chart */}
+          <motion.div
+            variants={fadeInUp}
+            className="col-span-1"
           >
             <Card className="h-full">
               <CardHeader>
-                <div className="flex justify-between items-center">
-                  <div>
-                    <CardTitle>Current Learning Path</CardTitle>
-                    <CardDescription>Critical Thinking & Problem Solving</CardDescription>
-                  </div>
-                  <Button variant="outline" size="sm">
-                    View All Paths
-                  </Button>
-                </div>
+                <CardTitle className="text-lg font-medium">Learning Activity</CardTitle>
+                <CardDescription>Your daily learning minutes this week</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  {[
-                    {
-                      title: "Logical Fallacies",
-                      description: "Learn to identify common reasoning errors",
-                      progress: 100,
-                      completed: true,
-                      icon: Brain
-                    },
-                    {
-                      title: "Structured Problem-Solving",
-                      description: "Master the STAR method for tackling complex problems",
-                      progress: 65,
-                      completed: false,
-                      icon: Rocket
-                    },
-                    {
-                      title: "Cognitive Biases",
-                      description: "Understand how biases affect decision making",
-                      progress: 0,
-                      completed: false,
-                      icon: Brain
-                    },
-                    {
-                      title: "Effective Argumentation",
-                      description: "Build persuasive and logically sound arguments",
-                      progress: 0,
-                      completed: false,
-                      icon: BookOpen
-                    }
-                  ].map((module, index) => (
-                    <div 
-                      key={index} 
-                      className={`relative flex items-start p-4 rounded-lg border ${
-                        module.completed ? 'bg-primary/5 border-primary/30' : 'bg-card border-border'
-                      } hover-scale`}
-                    >
-                      <div className={`mr-4 h-10 w-10 rounded-full flex items-center justify-center ${
-                        module.completed ? 'bg-primary/20 text-primary' : 'bg-secondary text-muted-foreground'
-                      }`}>
-                        <module.icon size={20} />
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex justify-between items-start">
-                          <div>
-                            <h4 className="text-base font-medium leading-none mb-1">{module.title}</h4>
-                            <p className="text-sm text-muted-foreground">{module.description}</p>
-                          </div>
-                          {module.completed ? (
-                            <div className="ml-2 bg-primary/20 text-primary text-xs font-medium px-2 py-1 rounded-full">
-                              Completed
-                            </div>
-                          ) : module.progress > 0 ? (
-                            <div className="ml-2 bg-secondary text-muted-foreground text-xs font-medium px-2 py-1 rounded-full">
-                              In Progress
-                            </div>
-                          ) : (
-                            <Button variant="outline" size="sm">
-                              Start
-                            </Button>
-                          )}
-                        </div>
-                        {module.progress > 0 && !module.completed && (
-                          <div className="mt-2 space-y-1">
-                            <Progress value={module.progress} className="h-1.5" />
-                            <div className="flex justify-between text-xs text-muted-foreground">
-                              <span>Progress</span>
-                              <span>{module.progress}%</span>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  ))}
+                <div className="h-[240px]">
+                  <BarChart 
+                    data={learningData}
+                    index="day"
+                    categories={["Minutes"]}
+                    colors={["#8B5CF6"]}
+                    valueFormatter={(value) => `${value} min`}
+                    showAnimation={true}
+                  />
                 </div>
               </CardContent>
+              <CardFooter className="border-t pt-4">
+                <Button variant="outline" asChild>
+                  <Link to="/microlearning">
+                    View All Learning Activities
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </CardFooter>
             </Card>
           </motion.div>
           
-          {/* Right column */}
-          <motion.div 
-            variants={staggerContainer}
-            initial="initial"
-            animate="animate" 
-            className="space-y-6"
+          {/* Digital Wellness Chart */}
+          <motion.div
+            variants={fadeInUp}
+            className="col-span-1"
           >
-            {/* Upcoming Sessions */}
-            <motion.div variants={fadeInUp}>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Calendar className="mr-2 h-5 w-5 text-primary" />
-                    Upcoming Sessions
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    {[
-                      {
-                        title: "AI Antagonist Battle",
-                        time: "Today, 5:30 PM",
-                        duration: "10 min"
-                      },
-                      {
-                        title: "Critical Thinking Challenge",
-                        time: "Tomorrow, 9:00 AM",
-                        duration: "15 min"
-                      }
-                    ].map((session, index) => (
-                      <div key={index} className="flex justify-between items-center p-3 rounded-lg border hover:bg-secondary/50 transition-colors">
-                        <div>
-                          <p className="font-medium">{session.title}</p>
-                          <div className="flex items-center text-sm text-muted-foreground">
-                            <Clock className="mr-1 h-3 w-3" />
-                            {session.time} ({session.duration})
-                          </div>
-                        </div>
-                        <Button size="sm" variant="outline">Join</Button>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-            
-            {/* Wellness Insights */}
-            <motion.div variants={fadeInUp}>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Activity className="mr-2 h-5 w-5 text-accent" />
-                    Wellness Insights
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <div className="flex justify-between">
-                        <span className="text-sm">Focus Sessions</span>
-                        <span className="text-sm font-medium">8/10</span>
-                      </div>
-                      <Progress value={80} className="h-1.5" />
-                    </div>
-                    <div className="space-y-2">
-                      <div className="flex justify-between">
-                        <span className="text-sm">Digital Distraction</span>
-                        <span className="text-sm font-medium">-32%</span>
-                      </div>
-                      <Progress value={68} className="h-1.5" />
-                    </div>
-                    <Button variant="outline" className="w-full" size="sm">
-                      View Full Analysis
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-            
-            {/* Achievement */}
-            <motion.div variants={fadeInUp}>
-              <Card className="bg-gradient-to-br from-primary/5 to-accent/5 border">
-                <CardHeader>
-                  <CardTitle>Latest Achievement</CardTitle>
-                </CardHeader>
-                <CardContent className="flex items-center justify-center py-6">
-                  <div className="text-center">
-                    <div className="h-16 w-16 rounded-full bg-primary/20 text-primary mx-auto flex items-center justify-center">
-                      <Star className="h-8 w-8" />
-                    </div>
-                    <h3 className="mt-4 font-semibold text-lg">7-Day Streak Master</h3>
-                    <p className="text-sm text-muted-foreground mt-1">
-                      Completed a learning session every day for a week
-                    </p>
-                    <div className="mt-4">
-                      <Button variant="outline" size="sm">
-                        View All Achievements
-                      </Button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
+            <Card className="h-full">
+              <CardHeader>
+                <CardTitle className="text-lg font-medium">Digital Wellness</CardTitle>
+                <CardDescription>Balance between mindful and distracted tech use</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="h-[240px]">
+                  <BarChart 
+                    data={wellnessData}
+                    index="day"
+                    categories={["Mindful Use", "Distracted Use"]}
+                    colors={["#10B981", "#F97316"]}
+                    valueFormatter={(value) => `${value} min`}
+                    showAnimation={true}
+                  />
+                </div>
+              </CardContent>
+              <CardFooter className="border-t pt-4">
+                <Button variant="outline" asChild>
+                  <Link to="/digital-wellness">
+                    View Digital Wellness Details
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </CardFooter>
+            </Card>
           </motion.div>
-        </div>
+        </motion.div>
+        
+        {/* AI Insights Section */}
+        <motion.div
+          variants={fadeInUp}
+          initial="initial"
+          animate="animate"
+          className="mb-8"
+        >
+          <h2 className="text-2xl font-bold mb-4">AI Insights</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {insightItems.map((item, index) => (
+              <Card key={index} className="hover-scale">
+                <CardHeader className="pb-2">
+                  <div className={`h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center ${item.color} mb-3`}>
+                    <item.icon size={20} />
+                  </div>
+                  <CardTitle className="text-lg">{item.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground">{item.description}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </motion.div>
+        
+        {/* Quick Actions Section */}
+        <motion.div
+          variants={fadeInUp}
+          initial="initial"
+          animate="animate"
+        >
+          <h2 className="text-2xl font-bold mb-4">Quick Actions</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+            {[
+              { title: "Start Today's Challenge", icon: Star, route: "/microlearning" },
+              { title: "Digital Wellness Check", icon: Activity, route: "/digital-wellness" },
+              { title: "Update Learning Goals", icon: Brain, route: "/profile" },
+              { title: "Invite a Friend", icon: UserPlus, route: "#" }
+            ].map((action, index) => (
+              <Button 
+                key={index}
+                variant="outline" 
+                className="h-auto py-6 flex flex-col items-center justify-center gap-3 hover-scale"
+                asChild
+              >
+                <Link to={action.route}>
+                  <action.icon className="h-6 w-6" />
+                  <span>{action.title}</span>
+                </Link>
+              </Button>
+            ))}
+          </div>
+        </motion.div>
       </main>
     </div>
   );
