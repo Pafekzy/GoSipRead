@@ -25,7 +25,7 @@ const Index = () => {
                 viewport={{ once: true }}
                 className="text-3xl font-bold tracking-tighter md:text-4xl/tight"
               >
-                How MasteryMind Works
+                How GoSipRead Works
               </motion.h2>
               <motion.p 
                 initial={{ opacity: 0, y: 20 }}
@@ -180,14 +180,14 @@ const Index = () => {
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-8">
             <div className="flex items-center space-x-2">
               <span className="text-lg font-semibold gradient-text">
-                Mastery<span className="text-accent">Mind</span>
+                GoSip<span className="text-accent">Read</span>
               </span>
             </div>
             <div className="flex items-center gap-4 text-muted-foreground text-sm">
               <a href="#" className="hover:text-foreground transition-colors">Privacy</a>
               <a href="#" className="hover:text-foreground transition-colors">Terms</a>
               <a href="#" className="hover:text-foreground transition-colors">Contact</a>
-              <span>© 2023 MasteryMind. All rights reserved.</span>
+              <span>© 2023 GoSipRead. All rights reserved.</span>
             </div>
           </div>
         </div>

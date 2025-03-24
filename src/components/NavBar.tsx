@@ -45,7 +45,7 @@ const NavBar = () => {
           <div className="flex justify-start lg:w-0 lg:flex-1">
             <Link to="/" className="flex items-center space-x-2">
               <span className="text-2xl font-bold gradient-text">
-                Mastery<span className="text-accent">Mind</span>
+                GoSip<span className="text-accent">Read</span>
               </span>
             </Link>
           </div>
