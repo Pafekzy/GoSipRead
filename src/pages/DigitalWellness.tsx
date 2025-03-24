@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import NavBar from '@/components/NavBar';
@@ -10,7 +9,7 @@ import {
   Activity, TrendingDown, Shield, Clock, Calendar, 
   Smartphone, BookOpen, Zap, TrendingUp 
 } from 'lucide-react';
-import { BarChart } from '@/components/ui/chart';
+import { BarChart } from '@/components/ui/bar-chart';
 
 const DigitalWellness = () => {
   const fadeInUp = {
