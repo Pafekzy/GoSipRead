@@ -5,6 +5,8 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/com
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { BookOpen, Clock, Smartphone, Calendar, TrendingUp, Zap } from 'lucide-react';
+import { habits, getHabitProgress } from '@/utils/digitalWellness';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface HabitCardProps {
   habit: {
@@ -19,10 +21,12 @@ interface HabitCardProps {
 }
 
 const HabitCard = ({ habit }: HabitCardProps) => {
+  const isMobile = useIsMobile();
+  
   return (
     <Card key={habit.id} className="hover-scale">
       <CardHeader className="pb-4">
-        <div className="flex justify-between items-start">
+        <div className={`flex justify-between ${isMobile ? 'flex-col gap-3' : 'items-start'}`}>
           <div className="flex items-start gap-4">
             <div className="h-10 w-10 rounded-full bg-primary/10 text-primary flex items-center justify-center">
               <habit.icon size={20} />
@@ -39,7 +43,7 @@ const HabitCard = ({ habit }: HabitCardProps) => {
         </div>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className={`grid grid-cols-1 ${isMobile ? '' : 'md:grid-cols-3'} gap-4`}>
           <div className="space-y-2 md:col-span-2">
             <div className="flex justify-between text-sm">
               <span>Consistency</span>
@@ -65,35 +69,29 @@ const HabitTransformation = () => {
     animate: { opacity: 1, y: 0, transition: { duration: 0.5 } }
   };
 
-  const habits = [
-    {
-      id: 1,
-      name: "Morning Microlearning",
-      description: "Replace morning social media scrolling with a 10-minute learning session",
-      progress: 80,
-      streak: 8,
-      impact: "Reduced morning phone usage by 62%",
-      icon: BookOpen
-    },
-    {
-      id: 2,
-      name: "Focus Blocks",
-      description: "Schedule 30-minute distraction-free focus sessions throughout the day",
-      progress: 65,
-      streak: 5,
-      impact: "Improved productivity score by 45%",
-      icon: Clock
-    },
-    {
-      id: 3,
-      name: "Digital Sunset",
-      description: "No screens 1 hour before bedtime, replaced with reading or journaling",
-      progress: 50,
-      streak: 3,
-      impact: "Sleep quality improved by 28%",
-      icon: Smartphone
-    }
+  // Get real habit progress data
+  const habitProgressData = getHabitProgress();
+  
+  // Combine with the habit definitions and add impact data
+  const habitImpacts = [
+    "Reduced morning phone usage by 62%",
+    "Improved productivity score by 45%",
+    "Sleep quality improved by 28%"
   ];
+  
+  const habitIcons = [BookOpen, Clock, Smartphone];
+  
+  const habitData = habits.map((habit, index) => {
+    const progress = habitProgressData.find(h => h.id === habit.id) || { progress: 0, streak: 0 };
+    
+    return {
+      ...habit,
+      progress: progress.progress,
+      streak: progress.streak,
+      impact: habitImpacts[index],
+      icon: habitIcons[index]
+    };
+  });
 
   return (
     <motion.div 
@@ -102,7 +100,7 @@ const HabitTransformation = () => {
       animate="animate"
       className="mb-8"
     >
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-6">
         <h2 className="text-2xl font-bold">Habit Transformation</h2>
         <Button>
           Add New Habit
@@ -111,7 +109,7 @@ const HabitTransformation = () => {
       </div>
       
       <div className="space-y-6">
-        {habits.map((habit) => (
+        {habitData.map((habit) => (
           <HabitCard key={habit.id} habit={habit} />
         ))}
       </div>

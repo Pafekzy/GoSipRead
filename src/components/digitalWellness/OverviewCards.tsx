@@ -4,6 +4,11 @@ import { motion } from 'framer-motion';
 import { TrendingDown, Zap, Shield } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { 
+  getScreenTimeTrend, 
+  getProductiveTimePercentage, 
+  getHabitProgress 
+} from '@/utils/digitalWellness';
 
 interface OverviewCardProps {
   title: string;
@@ -33,12 +38,14 @@ const OverviewCard = ({ title, description, value, icon: Icon, color }: Overview
         </CardHeader>
         <CardContent>
           <div className="space-y-2">
-            {value > 0 ? (
+            {value > 0 && value <= 100 ? (
               <Progress value={value} className="h-2" />
             ) : (
               <div className="flex items-center gap-2">
-                <TrendingDown className="h-5 w-5 text-green-500" />
-                <span className="text-lg font-semibold text-green-500">{Math.abs(value)}%</span>
+                <TrendingDown className={`h-5 w-5 ${value < 0 ? 'text-green-500' : 'text-red-500'}`} />
+                <span className={`text-lg font-semibold ${value < 0 ? 'text-green-500' : 'text-red-500'}`}>
+                  {Math.abs(value)}%
+                </span>
               </div>
             )}
           </div>
@@ -53,25 +60,37 @@ const OverviewCards = () => {
     animate: { transition: { staggerChildren: 0.1 } }
   };
 
+  // Get real data from our tracking utilities
+  const screenTimeTrend = getScreenTimeTrend(7);
+  const productivePercentage = getProductiveTimePercentage(7);
+  const habitProgressArray = getHabitProgress();
+  
+  // Calculate average habit completion rate
+  const totalProgress = habitProgressArray.reduce((sum, habit) => sum + habit.progress, 0);
+  const averageHabitProgress = Math.round(totalProgress / habitProgressArray.length);
+  
+  // Calculate total streak days across all habits
+  const totalStreakDays = habitProgressArray.reduce((sum, habit) => sum + habit.streak, 0);
+
   const cards = [
     { 
       title: "Screen Time Trend", 
-      description: "Decreased by 27% this week", 
-      value: -27, 
+      description: `${screenTimeTrend < 0 ? 'Decreased' : 'Increased'} by ${Math.abs(screenTimeTrend)}% this week`, 
+      value: screenTimeTrend, 
       icon: TrendingDown,
-      color: "text-green-500"
+      color: screenTimeTrend < 0 ? "text-green-500" : "text-red-500"
     },
     { 
       title: "Productive Screen Time", 
-      description: "78% of your digital usage is productive", 
-      value: 78, 
+      description: `${productivePercentage}% of your digital usage is productive`, 
+      value: productivePercentage, 
       icon: Zap,
       color: "text-primary"
     },
     { 
       title: "Habit Transformation", 
-      description: "3 active habit replacements", 
-      value: 65, 
+      description: `${totalStreakDays} active habit streak days`, 
+      value: averageHabitProgress, 
       icon: Shield,
       color: "text-accent"
     }
