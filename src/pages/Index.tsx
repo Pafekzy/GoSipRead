@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Hero from '@/components/Hero';
@@ -6,10 +5,8 @@ import NavBar from '@/components/NavBar';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Star, Shield, Zap, User } from 'lucide-react';
-
 const Index = () => {
-  return (
-    <div className="min-h-screen flex flex-col">
+  return <div className="min-h-screen flex flex-col">
       <NavBar />
       
       <main className="flex-1">
@@ -19,55 +16,63 @@ const Index = () => {
         <section className="py-20 bg-secondary/50">
           <div className="container px-4 md:px-6">
             <div className="text-center space-y-4 mb-12">
-              <motion.h2 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                viewport={{ once: true }}
-                className="text-3xl font-bold tracking-tighter md:text-4xl/tight"
-              >
+              <motion.h2 initial={{
+              opacity: 0,
+              y: 20
+            }} whileInView={{
+              opacity: 1,
+              y: 0
+            }} transition={{
+              duration: 0.5
+            }} viewport={{
+              once: true
+            }} className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
                 How GoSipRead Works
               </motion.h2>
-              <motion.p 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-                viewport={{ once: true }}
-                className="mx-auto max-w-[700px] text-muted-foreground md:text-lg"
-              >
+              <motion.p initial={{
+              opacity: 0,
+              y: 20
+            }} whileInView={{
+              opacity: 1,
+              y: 0
+            }} transition={{
+              duration: 0.5,
+              delay: 0.1
+            }} viewport={{
+              once: true
+            }} className="mx-auto max-w-[700px] text-muted-foreground md:text-lg">
                 Our AI-driven approach is designed for maximum impact with minimal time investment
               </motion.p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mt-16">
-              {[
-                {
-                  step: '01',
-                  title: 'Personalized Assessment',
-                  description: 'Our AI analyzes your learning style, goals, and current habits to create your custom growth plan',
-                  icon: User
-                },
-                {
-                  step: '02',
-                  title: 'Microlearning Challenges',
-                  description: 'Engage in daily 5-10 minute high-impact learning sessions tailored to your growth areas',
-                  icon: Zap
-                },
-                {
-                  step: '03',
-                  title: 'Track & Transform',
-                  description: 'Monitor your progress with real-time analytics and watch as small daily actions create lasting change',
-                  icon: Star
-                }
-              ].map((item, i) => (
-                <motion.div 
-                  key={item.step}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.1 * i }}
-                  viewport={{ once: true }}
-                  className="relative"
-                >
+              {[{
+              step: '01',
+              title: 'Personalized Assessment',
+              description: 'Our AI analyzes your learning style, goals, and current habits to create your custom growth plan',
+              icon: User
+            }, {
+              step: '02',
+              title: 'Microlearning Challenges',
+              description: 'Engage in daily 5-10 minute high-impact learning sessions tailored to your growth areas',
+              icon: Zap
+            }, {
+              step: '03',
+              title: 'Track & Transform',
+              description: 'Monitor your progress with real-time analytics and watch as small daily actions create lasting change',
+              icon: Star
+            }].map((item, i) => <motion.div key={item.step} initial={{
+              opacity: 0,
+              y: 20
+            }} whileInView={{
+              opacity: 1,
+              y: 0
+            }} transition={{
+              duration: 0.5,
+              delay: 0.1 * i
+            }} viewport={{
+              once: true
+            }} className="relative">
                   <div className="absolute -top-10 text-7xl font-bold text-muted/10">{item.step}</div>
                   <div className="pt-6 space-y-4">
                     <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
@@ -76,8 +81,7 @@ const Index = () => {
                     <h3 className="text-xl font-semibold">{item.title}</h3>
                     <p className="text-muted-foreground">{item.description}</p>
                   </div>
-                </motion.div>
-              ))}
+                </motion.div>)}
             </div>
           </div>
         </section>
@@ -86,13 +90,17 @@ const Index = () => {
         <section className="py-20">
           <div className="container px-4 md:px-6">
             <div className="grid md:grid-cols-2 gap-10 items-center">
-              <motion.div 
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6 }}
-                viewport={{ once: true }}
-                className="space-y-4"
-              >
+              <motion.div initial={{
+              opacity: 0,
+              x: -20
+            }} whileInView={{
+              opacity: 1,
+              x: 0
+            }} transition={{
+              duration: 0.6
+            }} viewport={{
+              once: true
+            }} className="space-y-4">
                 <div className="inline-flex items-center rounded-full border border-accent/20 bg-accent/10 px-3 py-1 text-sm text-accent">
                   <span className="font-medium">Digital Wellness</span>
                 </div>
@@ -103,24 +111,21 @@ const Index = () => {
                   Our intelligent tracking helps you identify harmful patterns and replace mindless scrolling with intentional growth activities.
                 </p>
                 <ul className="space-y-2">
-                  {[
-                    'AI-tracked distraction patterns',
-                    'Personalized intervention strategies',
-                    'Habit replacement techniques',
-                    'Progress visualization and rewards'
-                  ].map((item, i) => (
-                    <motion.li 
-                      key={i}
-                      initial={{ opacity: 0, x: -10 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.3, delay: 0.1 * i }}
-                      viewport={{ once: true }}
-                      className="flex items-center"
-                    >
+                  {['AI-tracked distraction patterns', 'Personalized intervention strategies', 'Habit replacement techniques', 'Progress visualization and rewards'].map((item, i) => <motion.li key={i} initial={{
+                  opacity: 0,
+                  x: -10
+                }} whileInView={{
+                  opacity: 1,
+                  x: 0
+                }} transition={{
+                  duration: 0.3,
+                  delay: 0.1 * i
+                }} viewport={{
+                  once: true
+                }} className="flex items-center">
                       <Shield className="h-5 w-5 text-accent mr-2" />
                       <span>{item}</span>
-                    </motion.li>
-                  ))}
+                    </motion.li>)}
                 </ul>
                 <Button asChild className="mt-2">
                   <Link to="/digital-wellness">
@@ -130,13 +135,17 @@ const Index = () => {
                 </Button>
               </motion.div>
               
-              <motion.div 
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6 }}
-                viewport={{ once: true }}
-                className="rounded-2xl bg-gradient-to-br from-accent/10 to-primary/10 p-1"
-              >
+              <motion.div initial={{
+              opacity: 0,
+              scale: 0.95
+            }} whileInView={{
+              opacity: 1,
+              scale: 1
+            }} transition={{
+              duration: 0.6
+            }} viewport={{
+              once: true
+            }} className="rounded-2xl bg-gradient-to-br from-accent/10 to-primary/10 p-1">
                 <div className="bg-background rounded-xl p-6 h-full">
                   <div className="aspect-video rounded-lg bg-background/80 flex items-center justify-center border">
                     <div className="text-center p-6">
@@ -153,13 +162,17 @@ const Index = () => {
         {/* CTA section */}
         <section className="py-20 bg-gradient-to-br from-primary/5 to-accent/5">
           <div className="container px-4 md:px-6">
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-              className="rounded-2xl bg-background border p-8 md:p-12 text-center max-w-3xl mx-auto space-y-6"
-            >
+            <motion.div initial={{
+            opacity: 0,
+            y: 20
+          }} whileInView={{
+            opacity: 1,
+            y: 0
+          }} transition={{
+            duration: 0.6
+          }} viewport={{
+            once: true
+          }} className="rounded-2xl bg-background border p-8 md:p-12 text-center max-w-3xl mx-auto space-y-6">
               <h2 className="text-3xl font-bold">Ready to Transform Your Growth Journey?</h2>
               <p className="text-muted-foreground md:text-lg">
                 Join thousands of users who are maximizing their potential through AI-guided microlearning.
@@ -194,13 +207,11 @@ const Index = () => {
               <a href="#" className="hover:text-foreground transition-colors">Privacy</a>
               <a href="#" className="hover:text-foreground transition-colors">Terms</a>
               <a href="#" className="hover:text-foreground transition-colors">Contact</a>
-              <span>© 2023 GoSipRead. All rights reserved.</span>
+              <span>© 2025 GoSipRead. All rights reserved.</span>
             </div>
           </div>
         </div>
       </footer>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
